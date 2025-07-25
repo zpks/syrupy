@@ -144,6 +144,33 @@ These are the cli options exposed to `pytest` by the plugin.
 | `--snapshot-patch-pycharm-diff`| Override PyCharm's default diffs viewer when looking at snapshot diffs. See [IDE Integrations](#ide-integrations)        | `False`                                                                                                      |
 | `--snapshot-diff-mode` | Configures how diffs are displayed on assertion failure. If working with very large snapshots, disabling the diff can improve performance. | `detailed` |
 | `--snapshot-ignore-file-extensions` | Comma separated list of file extensions to ignore when walking the file tree and discovering used/unused snapshots. | No extensions are ignored by default. |
+| `--snapshot-rel-tol` | Relative tolerance used when comparing numeric values. | `None` |
+| `--snapshot-abs-tol` | Absolute tolerance used when comparing numeric values. | `None` |
+
+#### Numeric Tolerance
+
+Use `--snapshot-rel-tol` or `--snapshot-abs-tol` to allow approximate comparison
+of numeric snapshots. First generate a snapshot:
+
+```python
+def test_generate(snapshot):
+    assert snapshot == 3.0
+```
+
+```shell
+pytest --snapshot-update
+```
+
+Then compare with a slightly different value using a tolerance:
+
+```python
+def test_compare(snapshot):
+    assert snapshot == 3.2
+```
+
+```shell
+pytest --snapshot-abs-tol=0.5
+```
 
 ### Assertion Options
 

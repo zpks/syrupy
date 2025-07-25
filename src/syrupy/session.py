@@ -51,6 +51,10 @@ class SnapshotSession:
     # List of file extensions to ignore during discovery/processing
     ignore_file_extensions: Optional[list[str]] = None
 
+    # Tolerances for numeric snapshot comparison
+    rel_tol: Optional[float] = None
+    abs_tol: Optional[float] = None
+
     # Snapshot report generated on finish
     report: Optional["SnapshotReport"] = None
     # All the collected test items

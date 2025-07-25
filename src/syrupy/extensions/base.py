@@ -1,4 +1,5 @@
 import warnings
+import math
 from abc import (
     ABC,
     abstractmethod,
@@ -405,6 +406,15 @@ class SnapshotReporter:
 
 
 class SnapshotComparator:
+    def __init__(
+        self,
+        *,
+        rel_tol: Optional[float] = None,
+        abs_tol: Optional[float] = None,
+    ) -> None:
+        self.rel_tol = rel_tol
+        self.abs_tol = abs_tol
+
     def matches(
         self,
         *,
@@ -413,8 +423,21 @@ class SnapshotComparator:
     ) -> bool:
         """
         Compares serialized data and snapshot data and returns
-        whether they match.
+        whether they match. Supports approximate float comparison
+        when ``rel_tol`` or ``abs_tol`` are specified.
         """
+        try:
+            if self.rel_tol is not None or self.abs_tol is not None:
+                a = float(serialized_data)
+                b = float(snapshot_data)
+                return math.isclose(
+                    a,
+                    b,
+                    rel_tol=self.rel_tol or 0.0,
+                    abs_tol=self.abs_tol or 0.0,
+                )
+        except Exception:
+            pass
         return bool(serialized_data == snapshot_data)
 
 
