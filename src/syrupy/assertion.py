@@ -114,7 +114,12 @@ class SnapshotAssertion:
     def __init_extension(
         self, extension_class: type["AbstractSyrupyExtension"]
     ) -> "AbstractSyrupyExtension":
-        return extension_class()
+        extension = extension_class()
+        if hasattr(extension, "rel_tol"):
+            extension.rel_tol = self.session.rel_tol
+        if hasattr(extension, "abs_tol"):
+            extension.abs_tol = self.session.abs_tol
+        return extension
 
     @property
     def extension(self) -> "AbstractSyrupyExtension":

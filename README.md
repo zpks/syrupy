@@ -144,6 +144,8 @@ These are the cli options exposed to `pytest` by the plugin.
 | `--snapshot-patch-pycharm-diff`| Override PyCharm's default diffs viewer when looking at snapshot diffs. See [IDE Integrations](#ide-integrations)        | `False`                                                                                                      |
 | `--snapshot-diff-mode` | Configures how diffs are displayed on assertion failure. If working with very large snapshots, disabling the diff can improve performance. | `detailed` |
 | `--snapshot-ignore-file-extensions` | Comma separated list of file extensions to ignore when walking the file tree and discovering used/unused snapshots. | No extensions are ignored by default. |
+| `--snapshot-rel-tol` | Relative tolerance used when comparing numeric values. | `None` |
+| `--snapshot-abs-tol` | Absolute tolerance used when comparing numeric values. | `None` |
 
 ### Assertion Options
 

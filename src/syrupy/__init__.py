@@ -108,6 +108,20 @@ def pytest_addoption(parser: "pytest.Parser") -> None:
         help="Comma separated list of file extensions to ignore when discovering snapshots",
         type=lambda v: v.split(","),
     )
+    group.addoption(
+        "--snapshot-rel-tol",
+        dest="snapshot_rel_tol",
+        type=float,
+        default=None,
+        help="Relative tolerance for float comparisons",
+    )
+    group.addoption(
+        "--snapshot-abs-tol",
+        dest="snapshot_abs_tol",
+        type=float,
+        default=None,
+        help="Absolute tolerance for float comparisons",
+    )
 
 
 def __terminal_color(
@@ -164,6 +178,8 @@ def pytest_sessionstart(session: Any) -> None:
     session.config._syrupy = SnapshotSession(
         pytest_session=session,
         ignore_file_extensions=session.config.option.ignore_file_extensions,
+        rel_tol=session.config.option.snapshot_rel_tol,
+        abs_tol=session.config.option.snapshot_abs_tol,
     )
     global _syrupy
     _syrupy = session.config._syrupy
