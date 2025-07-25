@@ -147,6 +147,31 @@ These are the cli options exposed to `pytest` by the plugin.
 | `--snapshot-rel-tol` | Relative tolerance used when comparing numeric values. | `None` |
 | `--snapshot-abs-tol` | Absolute tolerance used when comparing numeric values. | `None` |
 
+#### Numeric Tolerance
+
+Use `--snapshot-rel-tol` or `--snapshot-abs-tol` to allow approximate comparison
+of numeric snapshots. First generate a snapshot:
+
+```python
+def test_generate(snapshot):
+    assert snapshot == 3.0
+```
+
+```shell
+pytest --snapshot-update
+```
+
+Then compare with a slightly different value using a tolerance:
+
+```python
+def test_compare(snapshot):
+    assert snapshot == 3.2
+```
+
+```shell
+pytest --snapshot-abs-tol=0.5
+```
+
 ### Assertion Options
 
 These are the options available on the `snapshot` assertion fixture.
